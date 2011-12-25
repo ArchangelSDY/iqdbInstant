@@ -18,7 +18,7 @@ for(var i=0;i<imgs.length;i++){
 
         imgs[i].setAttribute("onclick","javascript: document.getElementById(\""+formIqdb.id+"\").submit();");
         imgs[i].setAttribute("onmouseover","javascript:this.style.opacity=0.5;");
-		imgs[i].setAttribute("onmouseleave","javascript:this.style.opacity=1;");
+		imgs[i].setAttribute("onmouseout","javascript:this.style.opacity=1;");
 		parent.appendChild(formIqdb);
 	}catch(err){
 		alert(err);
