@@ -5,7 +5,7 @@ for(var i=0;i<imgs.length;i++){
 
 		var formIqdb=document.createElement("form");
 		formIqdb.id="formIqdb"+Math.floor(Math.random()*10000);
-		formIqdb.action="http://iqdb.org/";
+		formIqdb.action="http://saucenao.com/search.php";
 		formIqdb.method="post";
 		formIqdb.enctype="multipart/form-data";
 		formIqdb.target="_blank";
@@ -15,6 +15,12 @@ for(var i=0;i<imgs.length;i++){
 		txtUrl.name="url";
 		txtUrl.value=imgs[i].src;
 		formIqdb.appendChild(txtUrl);
+		
+		var checkbox=document.createElement("input");
+		checkbox.type="hidden";
+		checkbox.name="urlify";
+		checkbox.value="true";
+		formIqdb.appendChild(checkbox);
 
         imgs[i].setAttribute("onclick","javascript: document.getElementById(\""+formIqdb.id+"\").submit();");
         imgs[i].setAttribute("onmouseover","javascript:this.style.opacity=0.5;");
@@ -24,4 +30,4 @@ for(var i=0;i<imgs.length;i++){
 		alert(err);
 	}
 }
-alert("Click on an image to search on iqdb.org.");
+alert("Click on an image to search on SauceNAO.com.");
