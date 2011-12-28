@@ -1,4 +1,5 @@
 var divInstant=new Array();
+divInstant.count=0;	//record toolbar count
 var imgs=document.getElementsByTagName("img");
 for(var i=0;i<imgs.length;i++){
 	try{
@@ -14,6 +15,7 @@ alert("Choose an image and click on it.");
 function createToolbar(img){
 	var parent=img.parentNode;
 	var imgSrc=img.src;
+	var id=divInstant.length;
     
     var divImg=document.createElement("div");
     divImg.style.position="relative";
@@ -24,46 +26,50 @@ function createToolbar(img){
     var toolbar=document.createElement("ul");
     toolbar.setAttribute("style","position: absolute;top: 0px;left: 0px;background-color: black;opacity: 0.8;list-style-type: none;");
 
-    toolbar.appendChild(createSearchEngine("iqdb","iqdbSearch('"+imgSrc+"');"));
-    toolbar.appendChild(createSearchEngine("sauceNAO","sauceNAOSearch('"+imgSrc+"');"));
-    toolbar.appendChild(createSearchEngine("Google","googleSearch('"+imgSrc+"');"));
-    toolbar.appendChild(createSearchEngine("TinEye","tineyeSearch('"+imgSrc+"');"));
-    toolbar.appendChild(createSearchEngine("Baidu","baiduSearch('"+imgSrc+"');"));
+    toolbar.appendChild(createSearchEngine("iqdb","iqdbSearch('"+imgSrc+"');",id));
+    toolbar.appendChild(createSearchEngine("sauceNAO","sauceNAOSearch('"+imgSrc+"');",id));
+    toolbar.appendChild(createSearchEngine("Google","googleSearch('"+imgSrc+"');",id));
+    toolbar.appendChild(createSearchEngine("TinEye","tineyeSearch('"+imgSrc+"');",id));
+    toolbar.appendChild(createSearchEngine("Baidu","baiduSearch('"+imgSrc+"');",id));
     divImg.appendChild(toolbar);
 
     divInstant.push(divImg);
+    divInstant.count++;
 }
 
-function createSearchEngine(name,searchEngine){
+function createSearchEngine(name,searchEngine,id){
     var engineLi=document.createElement("li");
     var engineAnchor=document.createElement("a");
     engineAnchor.setAttribute("style","color: white;text-decoration: none;margin: 5px;")   
     engineAnchor.href="javascript:void(0);";
-    engineAnchor.setAttribute("onclick",searchEngine+"exitSearch();");
+    engineAnchor.setAttribute("onclick",searchEngine+"exitSearch('"+id+"');");
     engineAnchor.innerHTML=name;
     engineLi.appendChild(engineAnchor);
     return engineLi;
 }
 
-function exitSearch(){
-	//remove the onclick event handler
-	var imgs=document.getElementsByTagName("img");
-	for(var i=0;i<imgs.length;i++){
-		try{   			
-	        imgs[i].removeAttribute("onclick");
-	        imgs[i].removeAttribute("onmouseover");
-	        imgs[i].removeAttribute("onmouseout");
-		}catch(err){
-			alert(err);
-		}
-	}
+function exitSearch(id){
+	var divImg=divInstant[id];
+	var img=divImg.childNodes[0];
 
-	//remove all toolbars
-	for(var i=0;i<divInstant.length;i++){
-		divImg=divInstant[i];
-		var img=divImg.childNodes[0];
-		divImg.parentNode.appendChild(divImg.removeChild(img));
-		divImg.parentNode.removeChild(divImg);
+	//remove the onclick event handler
+    img.removeAttribute("onclick");
+    img.removeAttribute("onmouseover");
+    img.removeAttribute("onmouseout");
+
+	//remove the toolbar
+	divImg.parentNode.appendChild(divImg.removeChild(img));
+	divImg.parentNode.removeChild(divImg);
+
+	divInstant.count--;
+
+	if(divInstant.count==0){
+		var imgs=document.getElementsByTagName("img");
+		for(var i=0;i<imgs.length;i++){
+		    imgs[i].removeAttribute("onclick");
+		    imgs[i].removeAttribute("onmouseover");
+		    imgs[i].removeAttribute("onmouseout");
+		}
 	}
 }
 
