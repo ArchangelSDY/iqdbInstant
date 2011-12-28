@@ -22,7 +22,7 @@ function createToolbar(img){
     divImg.appendChild(parent.removeChild(img));
     
     var toolbar=document.createElement("ul");
-    toolbar.setAttribute("style","position: absolute;top: 0px;left: 0px;background-color: black;opacity: 0.8;");
+    toolbar.setAttribute("style","position: absolute;top: 0px;left: 0px;background-color: black;opacity: 0.8;list-style-type: none;");
 
     toolbar.appendChild(createSearchEngine("iqdb","iqdbSearch('"+imgSrc+"');"));
     toolbar.appendChild(createSearchEngine("sauceNAO","sauceNAOSearch('"+imgSrc+"');"));
