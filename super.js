@@ -1,3 +1,4 @@
+var divInstant=new Array();
 var imgs=document.getElementsByTagName("img");
 for(var i=0;i<imgs.length;i++){
 	try{
@@ -29,6 +30,8 @@ function createToolbar(img){
     toolbar.appendChild(createSearchEngine("TinEye","tineyeSearch('"+imgSrc+"');"));
     toolbar.appendChild(createSearchEngine("Baidu","baiduSearch('"+imgSrc+"');"));
     divImg.appendChild(toolbar);
+
+    divInstant.push(divImg);
 }
 
 function createSearchEngine(name,searchEngine){
@@ -36,10 +39,32 @@ function createSearchEngine(name,searchEngine){
     var engineAnchor=document.createElement("a");
     engineAnchor.setAttribute("style","color: white;text-decoration: none;margin: 5px;")   
     engineAnchor.href="javascript:void(0);";
-    engineAnchor.setAttribute("onclick",searchEngine);
+    engineAnchor.setAttribute("onclick",searchEngine+"exitSearch();");
     engineAnchor.innerHTML=name;
     engineLi.appendChild(engineAnchor);
     return engineLi;
+}
+
+function exitSearch(){
+	//remove the onclick event handler
+	var imgs=document.getElementsByTagName("img");
+	for(var i=0;i<imgs.length;i++){
+		try{   			
+	        imgs[i].removeAttribute("onclick");
+	        imgs[i].removeAttribute("onmouseover");
+	        imgs[i].removeAttribute("onmouseout");
+		}catch(err){
+			alert(err);
+		}
+	}
+
+	//remove all toolbars
+	for(var i=0;i<divInstant.length;i++){
+		divImg=divInstant[i];
+		var img=divImg.childNodes[0];
+		divImg.parentNode.appendChild(divImg.removeChild(img));
+		divImg.parentNode.removeChild(divImg);
+	}
 }
 
 function iqdbSearch(url){
