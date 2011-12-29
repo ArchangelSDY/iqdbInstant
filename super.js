@@ -1,22 +1,46 @@
-if(divInstant){
+if(divInstant!=null){
 	//already running
 	for(var i=0;i<divInstant.length;i++){
 		var divImg=divInstant[i];
 		var img=divImg.childNodes[0];
 
+		//remove the event listener
+		img.removeEventListener("mouseover",showToolbar,false);
+		img.removeEventListener("mouseout",hideToolbar,false);
+
 		//remove the toolbar
 		divImg.parentNode.appendChild(divImg.removeChild(img));
 		divImg.parentNode.removeChild(divImg);
 	}
-	delete divInstant;
+	divInstant=null;
 	alert("imageInstant is unloaded.")
 }else{
 	//initialize
 	var divInstant=new Array();
+
+	var showToolbar=function(){
+		var toolbar=this.parentNode.lastChild;
+		while(toolbar.nodeType!=1){
+			toolbar=toolbar.previousSibling;
+		}
+		toolbar.style.opacity="0.8";
+	};
+
+	var hideToolbar=function(){
+		var toolbar=this.parentNode.lastChild;
+		while(toolbar.nodeType!=1){
+			toolbar=toolbar.previousSibling;
+		}
+		toolbar.style.opacity="0";
+	};
+
 	var imgs=document.getElementsByTagName("img");
 	for(var i=0;i<imgs.length;i++){
 		try{
-	        createToolbar(imgs[i]);
+			//only apply for images larger than 100x100px
+			if(imgs[i].width>=100 && imgs[i].height>=100){
+	        	createToolbar(imgs[i]);
+	    	}
 		}catch(err){
 			alert(err);
 		}
@@ -46,38 +70,19 @@ function createToolbar(img){
     divImg.appendChild(toolbar);
 
     divInstant.push(divImg);
-    divInstant.count++;
 
     if(img.addEventListener){
-    	img.addEventListener("mouseover",function(){showToolbar(this);});
+    	img.addEventListener("mouseover",showToolbar,false);
     }else if(img.attachEvent){
-    	img.attachEvent("onclick",function(){showToolbar(this);});
+    	img.attachEvent("onclick",showToolbar);
     }
     if(img.addEventListener){
-    	img.addEventListener("mouseout",function(){hideToolbar(this);});
+    	img.addEventListener("mouseout",hideToolbar,false);
     }else if(img.attachEvent){
-    	img.attachEvent("onmouseout",function(){hideToolbar(this);});
+    	img.attachEvent("onmouseout",hideToolbar);
     }
    	toolbar.setAttribute("onmouseover","this.style.opacity=0.8;");
    	toolbar.setAttribute("onmouseout","this.style.opacity=0;");
-}
-
-function showToolbar(e){
-	e=e?e:window.event;
-	var toolbar=e.parentNode.lastChild;
-	while(toolbar.nodeType!=1){
-		toolbar=toolbar.previousSibling;
-	}
-	toolbar.style.opacity="0.8";
-}
-
-function hideToolbar(e){
-	e=e?e:window.event;
-	var toolbar=e.parentNode.lastChild;
-	while(toolbar.nodeType!=1){
-		toolbar=toolbar.previousSibling;
-	}
-	toolbar.style.opacity="0";
 }
 
 function createSearchEngine(name,searchEngine,id){
