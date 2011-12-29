@@ -38,7 +38,9 @@ if(divInstant!=null){
 	for(var i=0;i<imgs.length;i++){
 		try{
 			//only apply for images larger than 100x100px
-			if(imgs[i].width>=100 && imgs[i].height>=100){
+			var img=new Image();
+			img.src=imgs[i].src;
+			if(img.width>=100 && img.height>=100){
 	        	createToolbar(imgs[i]);
 	    	}
 		}catch(err){
@@ -60,7 +62,7 @@ function createToolbar(img){
     divImg.appendChild(parent.removeChild(img));
     
     var toolbar=document.createElement("ul");
-    toolbar.setAttribute("style","position: absolute;top: 0px;left: 0px;background-color: black;opacity: 0;list-style-type: none;");
+    toolbar.setAttribute("style","margin: 0px;padding: 0px;position: absolute;top: 0px;left: 0px;background-color: black;opacity: 0;list-style-type: none;");
 
     toolbar.appendChild(createSearchEngine("iqdb","iqdbSearch('"+imgSrc+"');",id));
     toolbar.appendChild(createSearchEngine("sauceNAO","sauceNAOSearch('"+imgSrc+"');",id));
@@ -87,6 +89,7 @@ function createToolbar(img){
 
 function createSearchEngine(name,searchEngine,id){
     var engineLi=document.createElement("li");
+    engineLi.setAttribute("style","display: block;margin: 0px;padding: 0px;");
     var engineAnchor=document.createElement("a");
     engineAnchor.setAttribute("style","color: white;text-decoration: none;margin: 5px;")   
     engineAnchor.href="javascript:void(0);";
