@@ -224,6 +224,62 @@ if (typeof imageInstant === 'undefined') {
 			form.submit();	
 		};
 
+		searchEngines['TinEye'] = function (url) {
+			var form=document.createElement("form");
+			form.action="http://www.tineye.com/search";
+			form.method="POST";
+			form.target="_blank";
+
+			var txtUrl=document.createElement("input");
+			txtUrl.type="hidden";
+			txtUrl.name="url";
+			txtUrl.value=url;
+			form.appendChild(txtUrl);
+
+			document.body.appendChild(form);
+			form.submit();
+		};
+
+		searchEngines['Baidu'] = function (url) {
+			var form=document.createElement("form");
+			form.action="http://stu.baidu.com/i?";
+			form.method="get";
+			form.target="_blank";
+
+			var txtUrl=document.createElement("input");
+			txtUrl.type="hidden";
+			txtUrl.name="objurl";
+			txtUrl.value=url;
+			form.appendChild(txtUrl);
+
+			var rt=document.createElement('input');
+			rt.type="hidden";
+			rt.name="rt";
+			rt.value='0';
+			form.appendChild(rt);
+
+			var rn=document.createElement('input');
+			rn.type="hidden";
+			rn.name="rn";
+			rn.value='10';
+			form.appendChild(rn);
+
+			var ct=document.createElement('input');
+			ct.type="hidden";
+			ct.name="ct";
+			ct.value='1';
+			form.appendChild(ct);
+
+			var tn=document.createElement('input');
+			tn.type="hidden";
+			tn.name="tn";
+			tn.value='baiduimage';
+			form.appendChild(tn);
+
+			document.body.appendChild(form);
+			form.submit();
+		};
+
 		return self;
 	}();
 } else {
