@@ -14,4 +14,4 @@ Supported sites
 
 Instruction
 -------------------
-Go to the [project page]("http://archangelsdy.github.com/iqdbInstant/") for more details.
+Go to the [project page](http://archangelsdy.github.com/iqdbInstant/) for more details.
