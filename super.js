@@ -54,17 +54,13 @@ if (typeof imageInstant === 'undefined') {
 			    divWrapper.style.position = 'relative';
 			    
 			    //Move image to the wrapper div.
-			    var imgNew = img.cloneNode(true);
-			    //Add event listeners to the new img element.
-			    addEventListener(imgNew, 'mouseover', showToolbar);
-			    addEventListener(imgNew, 'mouseout', hideToolbar);
-			    divWrapper.appendChild(imgNew);	//To avoid to be removed by replaceChild().
-			    parent.replaceChild(divWrapper, img);	//Use replaceChild() to keep the previous order.
+			    //Use replaceChild() to keep the previous order.
+			    divWrapper.appendChild(parent.replaceChild(divWrapper, img));
 			    
 			    //Add toolbar.
-			    toolbar = createToolbar(imgNew);
+			    toolbar = createToolbar(img);
 			    toolbarMap.push({
-			    	'img': imgNew,
+			    	'img': img,
 			    	'toolbar': toolbar
 			    });
 			    divWrapper.appendChild(toolbar);
