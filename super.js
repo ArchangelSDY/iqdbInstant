@@ -149,6 +149,11 @@ if (typeof imageInstant === 'undefined') {
 		   	};
 
 		    for (engine in searchEngines) {
+		    	//Rule out unrelated properties
+		    	if (!searchEngines.hasOwnProperty(engine) && typeof engine !== 'function') {
+		    		continue;
+		    	}
+		    	
 				var engineLi = document.createElement('li');
 			    engineLi.style.display = 'block';
 			    engineLi.style.margin = '0px';
