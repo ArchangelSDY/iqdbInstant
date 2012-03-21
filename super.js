@@ -165,11 +165,19 @@ if (typeof imageInstant === 'undefined') {
 			   	engineAnchor.style.margin = '5px';
 			    engineAnchor.href = 'javascript:void(0); ';
 			    engineAnchor.innerHTML = engine;	//Set name.
-			    engineAnchor.onclick = function (href, searchEngine) {
-			    	return function () {
+
+			    // On click event
+			    var onclick = function (href, searchEngine) {
+			    	return function (e) {
 			    		searchEngine(href);
+			    		var event = e || window.event;
+			    		event.stopPropagation();
 			    	};
 			    }(img.src, searchEngines[engine]);
+
+			    addEventListener(engineLi, 'click', onclick);
+			    addEventListener(engineLi, 'mousedown', onclick);
+
 			    engineLi.appendChild(engineAnchor);
 
 			    toolbar.appendChild(engineLi);
