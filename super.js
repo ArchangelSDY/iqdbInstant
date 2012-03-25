@@ -175,7 +175,6 @@ if (typeof imageInstant === 'undefined') {
 			    	};
 			    }(img.src, searchEngines[engine]);
 
-			    addEventListener(engineLi, 'click', onclick);
 			    addEventListener(engineLi, 'mousedown', onclick);
 
 			    engineLi.appendChild(engineAnchor);
